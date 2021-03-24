@@ -80,8 +80,6 @@ def get_raw_box_score(game_id):
                                        'rawboxscore.xml'))
     except HTTPError:
         print("Warning: Failed to get raw box score..")
-        print(str(HTTPError))
-        print(HTTPError.reason)
         return None
 
 
