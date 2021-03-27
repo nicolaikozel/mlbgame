@@ -339,7 +339,7 @@ def overview(game_id):
     overview_root = etree.parse(overview).getroot()
 
     try:
-        output = add_box_score_attributes(output, game_id)
+        output = add_raw_box_score_attributes(output, game_id)
     except ValueError:
         pass
 
@@ -365,16 +365,17 @@ def overview(game_id):
     return output
 
 
-def add_box_score_attributes(output, game_id):
-    # boxscore may not be available prior to a game
-    box_score = mlbgame.data.get_box_score(game_id)
-    try:
-        box_score_root = etree.parse(box_score).getroot()
-        # get box score attributes
-        for attr in box_score_root.attrib:
-            output[attr] = box_score_root.attrib[attr]
-    except etree.XMLSyntaxError:
-        pass
+def add_raw_box_score_attributes(output, game_id):
+    # rawboxscore may not be available prior to a game
+    raw_box_score = mlbgame.data.get_raw_box_score(game_id)
+    if raw_box_score:
+        try:
+            raw_box_score_root = etree.parse(raw_box_score).getroot()
+            # get box score attributes
+            for attr in raw_box_score_root.attrib:
+                output[attr] = raw_box_score_root.attrib[attr]
+        except etree.XMLSyntaxError:
+            pass
     return output
 
 

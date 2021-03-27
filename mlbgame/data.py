@@ -79,7 +79,7 @@ def get_raw_box_score(game_id):
         return urlopen(GAME_URL.format(year, month, day, game_id,
                                        'rawboxscore.xml'))
     except HTTPError:
-        raise ValueError('Could not find a game with that id.')
+        return None
 
 
 def get_game_events(game_id):
